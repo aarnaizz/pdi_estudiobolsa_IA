@@ -99,7 +99,13 @@ plt.ylabel('Accuracy')
 plt.legend()
 plt.show()
 
+
 predicciones = model.predict(X_test)
-print(predicciones)
-puntos_compra = predicciones #where...
+predicciones = pd.DataFrame({'probabilidades': predicciones[:,0]} )
+
+ptos_compra = predicciones.where(predicciones['probabilidades']<0.1)
+ptos_venta = predicciones.where(predicciones['probabilidades']>0.9)
+
+ptos_compra.to_excel('ptos_compra_rsi.xlsx')
+ptos_venta.to_excel('ptos_venta_rsi.xlsx')
 
