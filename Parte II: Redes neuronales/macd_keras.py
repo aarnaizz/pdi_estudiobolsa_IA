@@ -7,8 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1QizF1bTXM5EGAj_rv1eZzTEyMrLPbnir
 """
 
-!pip install ta
-
 # Commented out IPython magic to ensure Python compatibility.
 import tensorflow.keras as kr
 import tensorflow
@@ -87,4 +85,10 @@ plt.legend()
 plt.show()
 
 predicciones = model.predict(X_test)
-print(predicciones)
+predicciones = pd.DataFrame({'probabilidades': predicciones[:,0]} )
+
+ptos_compra = predicciones.where(predicciones['probabilidades']<0.1)
+ptos_venta = predicciones.where(predicciones['probabilidades']>0.9)
+
+ptos_compra.to_excel('ptos_compra_macd.xlsx')
+ptos_venta.to_excel('ptos_venta_macd.xlsx')
