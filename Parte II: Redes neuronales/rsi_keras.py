@@ -7,7 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1yPVJ-WT9OQLPS8b3E8wmJU9Wky7rOvsc
 """
 
-!pip install ta
 
 # Commented out IPython magic to ensure Python compatibility.
 # %load_ext tensorboard
@@ -80,13 +79,6 @@ model.compile(loss='mse', optimizer=kr.optimizers.SGD(lr=lr), metrics=['acc'])
 
 # Y entrenamos al modelo.
 history = model.fit(X, Y, batch_size=32, epochs=100, validation_data=(X_val,Y_val),callbacks=[tensorboard_callback])
-
-# Commented out IPython magic to ensure Python compatibility.
-model.summary()
-
-log_dir="logs/fit/" + dt.datetime.now().strftime("%Y%m%d-%H%M%S")
-tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
-# %tensorboard --logdir logs/fit
 
 # Gráficos
 loss_train = history.history['loss']
